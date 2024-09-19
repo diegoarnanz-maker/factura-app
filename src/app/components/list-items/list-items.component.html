@@ -1,0 +1,27 @@
+<!--Es el hijo de Invoice y el padre de Row-->
+<h4>Detalle de la factura</h4>
+
+<!--Preguntamos si hay productos o no, viendo si el Array esta vacio--> 
+@if(items.length > 0) {
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>producto</th>
+            <th>precio</th>
+            <th>stock</th>
+            <th>eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (item of items; track $index) {
+            <!--Colocamos el selector de row-->
+            <!--(removeEventEmitter), es el atributo de la clase row-->
+            <!--"onRemove($event)", recibe el valor. Ahora hay que implementarlo en la clase de list-items -->
+            <tr row-item [item]="item" (removeEventEmitter)="onRemove($event)"></tr>
+        }
+    </tbody>
+</table>
+} @else {
+    <div class="alert alert-warning">No tiene items la factura!</div>
+}

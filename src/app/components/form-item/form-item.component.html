@@ -1,0 +1,87 @@
+
+<!--(ngSubmit)="Aqui colocamos un metodo creado en la clase form -> onSubmit(itemForm) "-->
+<!--#nombreInstancia="ngForm" -> para poder habilitar o deshabilitar el boton si no cumple (VALIDACION)-->
+<form class="w-50" (ngSubmit)="onSubmit(itemForm)" #itemForm="ngForm">
+
+    <!--Producto-->
+    <input name="product" 
+    placeholder="Producto" 
+    class="form-control m-3"
+    [(ngModel)]="item.product" 
+    required 
+    minlength="3"
+    #product="ngModel">
+    <!--Angular no maneja el value="", hay que mapear un objeto de la clase form-item-->
+    <!--[(ngModel)]="item.product", es el value="item.product"-->
+
+    <!--Para validar el form -->
+    <!--Muesta el error: si es invalido O si es modificado o tocado-->
+    @if (product.invalid && (product.dirty || product.touched)) {
+        @if (product.errors!['required']) {
+            <div class="text-danger mx-3"> 
+                Nombre del producto es requerido 
+            </div>
+        }
+
+        @if (product.errors!['minlength']) {
+            <div class="text-danger mx-3"> 
+                Nombre del producto debe tener al menos tres caracteres 
+            </div>
+        }
+    } <!--FIN Producto-->
+
+    <!--Precio-->
+    <input name="price" 
+    type="number"
+    placeholder="Precio" 
+    class="form-control m-3"
+    [(ngModel)]="item.price"
+    required 
+    min="5"
+    #price="ngModel">
+
+    @if (price.invalid && (price.dirty || price.touched)) {
+        @if (price.errors!['required']) {
+            <div class="text-danger mx-3"> 
+                Precio del producto es requerido 
+            </div>
+        }
+
+        @if (price.errors!['min']) {
+            <div class="text-danger mx-3"> 
+                Precio del producto debe ser mayor o igual a cinco
+            </div>
+        }
+    } <!--FIN Precio-->
+
+
+    <!--Cantidad-->
+    <input name="quantity"
+    type="number"
+    placeholder="Cantidad" 
+    class="form-control m-3"
+    [(ngModel)]="item.quantity"
+    required 
+    min="1"
+    #quantity="ngModel">
+
+    @if (quantity.invalid && (quantity.dirty || quantity.touched)) {
+        @if (quantity.errors!['required']) {
+            <div class="text-danger mx-3"> 
+                Cantidad del producto es requerido 
+            </div>
+        }
+
+        @if (quantity.errors!['min']) {
+            <div class="text-danger mx-3"> 
+                Cantidad del producto debe mayor o igual a uno 
+            </div>
+        }
+    } <!--FIN Cantidad-->
+
+    <!--[disabled]="nombreInstancia.invalid", si no cumple, se deshabilita el button-->
+    <button class="btn btn-primary m-3" [disabled]="itemForm.invalid">
+        Nuevo Producto
+    </button>
+
+</form>
